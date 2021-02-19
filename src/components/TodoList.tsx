@@ -1,11 +1,20 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import TodoListItem from './TodoListItem'
-const TodoList = () => {
-const items = ['Learn', 'React', 'More']
-  const li = items.map(el=><li><TodoListItem title={el}/></li>)
+
+export type TasksType = {
+  label: string
+  important: boolean
+}
+type TodoListPropsType = {
+  data: Array<TasksType>
+}
+
+const TodoList: FunctionComponent<TodoListPropsType> = ({data}) => {
+  const liElements = data.map((el, i) => <li key={i}><TodoListItem {...el}/></li>)//при совпадении пропсов мы можем передать всё спред оператором
+
   return (
       <ul>
-        {li}
+        {liElements}
       </ul>
   );
 };
