@@ -3,11 +3,13 @@ import CSS from 'csstype';
 import './TodoListItem.css'
 
 type TodoListItemPropsType = {
+  id:number
   label: string
   important: boolean
+  deleteTask:(id:number)=>void
 }
 
-const TodoListItem: FunctionComponent<TodoListItemPropsType> = ({label, important = false}) => {
+const TodoListItem: FunctionComponent<TodoListItemPropsType> = ({id,label,deleteTask, important = false}) => {
 debugger
 const [importantTask,setImportantTask]=useState(important);
 
@@ -16,8 +18,8 @@ const [importantTask,setImportantTask]=useState(important);
 
 
 
-const deleteTask=()=>{
-  console.log('delete')
+const onDeleteTask=(id:number)=>{
+  deleteTask(id)
 }
 const addImportantTask=()=>{
   setImportantTask(!importantTask)
@@ -41,7 +43,7 @@ const addImportantTask=()=>{
         <i className="fa fa-exclamation" />
       </button>
 
-      <button onClick={deleteTask}
+      <button onClick={()=>onDeleteTask(id)}
           type="button"
               className="btn btn-outline-danger btn-sm float-right">
         <i className="fa fa-trash-o" />
