@@ -1,4 +1,6 @@
 .todo-list-item {
+    display: flex;
+    justify-content: space-between;
     font-size: 1.25rem;
 }
 
@@ -21,4 +23,7 @@
 .todo-list-item.important .todo-list-item-label {
     font-weight: bold;
     color: steelblue;
+}
+.done{
+    text-decoration:line-through ;
 }

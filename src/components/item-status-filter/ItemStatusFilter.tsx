@@ -1,14 +1,29 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 
-const ItemStatusFilter = () => {
+type ItemStatusFilterPropsType = {
+  sortTasks: (filter: string) => void
+}
+const ItemStatusFilter: FunctionComponent<ItemStatusFilterPropsType> = ({sortTasks}) => {
+  const onFilterClick = (filter: string) => {
+    sortTasks(filter)
+  }
   return (
       <div className="btn-group">
-        <button type="button"
-                className="btn btn-info">All</button>
-        <button type="button"
-                className="btn btn-outline-secondary">Active</button>
-        <button type="button"
-                className="btn btn-outline-secondary">Done</button>
+        <button
+            onClick={() => onFilterClick('all')}
+            type="button"
+            className="btn btn-info">All
+        </button>
+        <button
+            onClick={() => onFilterClick('active')}
+            type="button"
+            className="btn btn-outline-secondary">Active
+        </button>
+        <button
+            onClick={() => onFilterClick('done')}
+            type="button"
+            className="btn btn-outline-secondary">Done
+        </button>
       </div>
   );
 };
