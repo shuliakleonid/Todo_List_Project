@@ -21,18 +21,18 @@ const App = () => {
     setTodo(todo.map(el=>el.id===id?{...el,isDone:true}:{...el}))
   }
   const sortTasks = (filter: string) => {
-    let newTodo={...todo}
+    let newTodo={...todoData}
     if(filter==='active'){
-     newTodo = todo.filter(el => !el.isDone)
+      return setTodo( todoData.filter(el => !el.isDone))
     }
     if(filter==='done'){
-     newTodo = todo.filter(el => el.isDone)
+      return setTodo(  todoData.filter(el => el.isDone))
     }
     if(filter==='all'){
-      setTodo(todoData)
+     return setTodo(todoData)
     }
 
-   return setTodo(newTodo)
+   // return setTodo(newTodo)
   }
 
   return (

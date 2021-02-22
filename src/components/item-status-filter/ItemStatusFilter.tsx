@@ -1,28 +1,35 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useState} from 'react';
 
 type ItemStatusFilterPropsType = {
   sortTasks: (filter: string) => void
 }
 const ItemStatusFilter: FunctionComponent<ItemStatusFilterPropsType> = ({sortTasks}) => {
+  const [activeButton,setActiveButton]=useState(false)
   const onFilterClick = (filter: string) => {
     sortTasks(filter)
+    setActiveButton(!activeButton)
   }
+const onActiveButton=(e:any)=>{
+  console.log(e.target.className)
+  e.target.className='btn btn-info'
+}
+  let styleButton = activeButton?'btn btn-info':'btn btn-outline-secondary'
   return (
       <div className="btn-group">
         <button
-            onClick={() => onFilterClick('all')}
+            onClick={onActiveButton}
             type="button"
-            className="btn btn-info">All
+            className={styleButton}>All
         </button>
         <button
-            onClick={() => onFilterClick('active')}
+            onClick={onActiveButton}
             type="button"
-            className="btn btn-outline-secondary">Active
+            className={styleButton}>Active
         </button>
         <button
-            onClick={() => onFilterClick('done')}
+            onClick={onActiveButton}
             type="button"
-            className="btn btn-outline-secondary">Done
+            className={styleButton}>Done
         </button>
       </div>
   );
