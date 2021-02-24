@@ -12,7 +12,7 @@ type TodoListItemPropsType = {
 }
 
 const TodoListItem: FunctionComponent<TodoListItemPropsType> = ({id, label, deleteTask,onDoneTask, isDone,important = false}) => {
-  debugger
+
   const [importantTask, setImportantTask] = useState<boolean>(important);
   // const [done,setDone]=useState<boolean>(isDone)
 

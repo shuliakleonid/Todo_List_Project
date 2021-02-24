@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import AppHeader from '../app-header/AppHeader';
 import SearchPanel from '../search-panel/SearchPanel';
 import TodoList, {TasksType} from '../todo-list/TodoList';
 import ItemStatusFilter from '../item-status-filter/ItemStatusFilter';
 import './App.css'
+import ItemAddForm from '../item-add-form/ItemAddForm';
 
 const App = () => {
   const todoData: Array<TasksType> = [
@@ -13,26 +14,43 @@ const App = () => {
   ]
   const [todo, setTodo] = useState<Array<TasksType>>(todoData)
 
-
   const deleteTask = (id: number) => {
-    setTodo(todo.filter(el => el.id !== id ? {...el} : ''))
+    const newTodo = [...todo]
+    console.log('delete',newTodo.filter(el => el.id !== id ? {...el} : ''))
+    setTodo(newTodo.filter(el => el.id !== id ? {...el} : ''))
   }
   const onDoneTask = (id:number)=>{
-    setTodo(todo.map(el=>el.id===id?{...el,isDone:true}:{...el}))
+    const newTodo = [...todo]
+    console.log('done',newTodo.map(el=>el.id===id?{...el,isDone:true}:{...el}))
+    setTodo(newTodo.map(el=>el.id===id?{...el,isDone:true}:{...el}))
   }
+
+const onAddNewTask=(label:string)=>{
+  const newTask:TasksType={
+    label:label,
+    important:false,
+    id:Date.now(),
+    isDone:false
+  }
+  setTodo([...todo,newTask])
+}
+
   const sortTasks = (filter: string) => {
-    let newTodo={...todoData}
+
+      const newTodo = [...todo]
     if(filter==='active'){
-      return setTodo( todoData.filter(el => !el.isDone))
+      console.log('active',newTodo.filter(el => !el.isDone))
+      return setTodo( newTodo.filter(el => !el.isDone))
     }
     if(filter==='done'){
-      return setTodo(  todoData.filter(el => el.isDone))
+
+      return setTodo( newTodo.filter(el => el.isDone))
     }
     if(filter==='all'){
-     return setTodo(todoData)
+
+     return setTodo(newTodo)
     }
 
-   // return setTodo(newTodo)
   }
 
   return (
@@ -43,6 +61,7 @@ const App = () => {
           <ItemStatusFilter sortTasks={sortTasks}/>
         </div>
         <TodoList todos={todo} deleteTask={deleteTask} onDoneTask={onDoneTask}/>
+        <ItemAddForm  onAddNewTask={onAddNewTask}/>
       </div>
   );
 }

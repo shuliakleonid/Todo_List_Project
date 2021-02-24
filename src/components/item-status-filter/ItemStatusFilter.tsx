@@ -17,17 +17,17 @@ const onActiveButton=(e:any)=>{
   return (
       <div className="btn-group">
         <button
-            onClick={onActiveButton}
+            onClick={()=>( onFilterClick('all'), onActiveButton)    }
             type="button"
             className={styleButton}>All
         </button>
         <button
-            onClick={onActiveButton}
+            onClick={()=>( onFilterClick('active'), onActiveButton)}
             type="button"
             className={styleButton}>Active
         </button>
         <button
-            onClick={onActiveButton}
+            onClick={()=>( onFilterClick('done'), onActiveButton)}
             type="button"
             className={styleButton}>Done
         </button>
