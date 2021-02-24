@@ -1,36 +1,31 @@
-import React, {FunctionComponent, useState} from 'react';
-
+import React, {FunctionComponent} from 'react';
+import {v1} from 'uuid';
+type Button={
+  name:string
+  label:string
+}
 type ItemStatusFilterPropsType = {
   sortTasks: (filter: string) => void
+  filter: string
 }
-const ItemStatusFilter: FunctionComponent<ItemStatusFilterPropsType> = ({sortTasks}) => {
-  const [activeButton,setActiveButton]=useState(false)
+const ItemStatusFilter: FunctionComponent<ItemStatusFilterPropsType> = ({sortTasks, filter}) => {
   const onFilterClick = (filter: string) => {
     sortTasks(filter)
-    setActiveButton(!activeButton)
   }
-const onActiveButton=(e:any)=>{
-  console.log(e.target.className)
-  e.target.className='btn btn-info'
-}
-  let styleButton = activeButton?'btn btn-info':'btn btn-outline-secondary'
+  const buttons:Array<Button> = [
+    {name: 'all', label: 'All'},
+    {name: 'active', label: 'Active'},
+    {name: 'done', label: 'Done'},
+  ]
+  const addButtons = buttons.map(({name, label}) => {
+        let isActive = filter === name;
+        let clazz = isActive ? 'btn-info' : 'btn-outline-secondary'
+    return <button key={v1()} className={`btn ${clazz}`} type='button' onClick={()=>onFilterClick(name)}>{label}</button>
+      }
+  )
   return (
       <div className="btn-group">
-        <button
-            onClick={()=>( onFilterClick('all'), onActiveButton)    }
-            type="button"
-            className={styleButton}>All
-        </button>
-        <button
-            onClick={()=>( onFilterClick('active'), onActiveButton)}
-            type="button"
-            className={styleButton}>Active
-        </button>
-        <button
-            onClick={()=>( onFilterClick('done'), onActiveButton)}
-            type="button"
-            className={styleButton}>Done
-        </button>
+        {addButtons}
       </div>
   );
 };
