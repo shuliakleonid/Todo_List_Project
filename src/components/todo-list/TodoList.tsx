@@ -11,7 +11,7 @@ export type TasksType = {
 type TodoListPropsType = {
   todos: Array<TasksType>
   deleteTask: (id: number) => void
-  onDoneTask:(id: number) => void
+  onDoneTask:(id: number,isDone:boolean) => void
 }
 
 const TodoList: FunctionComponent<TodoListPropsType> = ({todos, deleteTask,onDoneTask}) => {

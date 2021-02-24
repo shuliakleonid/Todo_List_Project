@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {useState} from 'react';
 import AppHeader from '../app-header/AppHeader';
 import SearchPanel from '../search-panel/SearchPanel';
 import TodoList, {TasksType} from '../todo-list/TodoList';
@@ -12,56 +12,56 @@ const App = () => {
     {label: 'Make Awesome App', important: true, id: 2, isDone: true},
     {label: 'Have a lunch', important: false, id: 3, isDone: false},
   ]
+
   const [todo, setTodo] = useState<Array<TasksType>>(todoData)
 
   const deleteTask = (id: number) => {
     const newTodo = [...todo]
-    console.log('delete',newTodo.filter(el => el.id !== id ? {...el} : ''))
+    console.log('delete', newTodo.filter(el => el.id !== id ? {...el} : ''))
     setTodo(newTodo.filter(el => el.id !== id ? {...el} : ''))
   }
-  const onDoneTask = (id:number)=>{
+  const onDoneTask = (id: number, isDone: boolean) => {
     const newTodo = [...todo]
-    console.log('done',newTodo.map(el=>el.id===id?{...el,isDone:true}:{...el}))
-    setTodo(newTodo.map(el=>el.id===id?{...el,isDone:true}:{...el}))
+    setTodo(newTodo.map(el => el.id === id ? {...el, isDone: !isDone} : {...el}))
   }
-
-const onAddNewTask=(label:string)=>{
-  const newTask:TasksType={
-    label:label,
-    important:false,
-    id:Date.now(),
-    isDone:false
+  const onAddNewTask = (label: string) => {
+    const newTask: TasksType = {
+      label: label,
+      important: false,
+      id: Date.now(),
+      isDone: false
+    }
+    setTodo([...todo, newTask])
   }
-  setTodo([...todo,newTask])
-}
 
   const sortTasks = (filter: string) => {
 
-      const newTodo = [...todo]
-    if(filter==='active'){
-      console.log('active',newTodo.filter(el => !el.isDone))
-      return setTodo( newTodo.filter(el => !el.isDone))
+    const newTodo = [...todo]
+    if (filter === 'active') {
+      console.log('active', newTodo.filter(el => !el.isDone))
+      return setTodo(newTodo.filter(el => !el.isDone))
     }
-    if(filter==='done'){
+    if (filter === 'done') {
 
-      return setTodo( newTodo.filter(el => el.isDone))
+      return setTodo(newTodo.filter(el => el.isDone))
     }
-    if(filter==='all'){
+    if (filter === 'all') {
 
-     return setTodo(newTodo)
+      return setTodo(newTodo)
     }
 
   }
-
+let onToggleDone= todo.filter(el=>el.isDone)
+let onToggleNotDone= todo.filter(el=>!el.isDone)
   return (
       <div className="todo-app">
-        <AppHeader toDo={1} done={3}/>
+        <AppHeader toDo={onToggleNotDone.length} done={onToggleDone.length}/>
         <div className="top-panel d-flex">
           <SearchPanel/>
           <ItemStatusFilter sortTasks={sortTasks}/>
         </div>
         <TodoList todos={todo} deleteTask={deleteTask} onDoneTask={onDoneTask}/>
-        <ItemAddForm  onAddNewTask={onAddNewTask}/>
+        <ItemAddForm onAddNewTask={onAddNewTask}/>
       </div>
   );
 }

@@ -8,7 +8,7 @@ type TodoListItemPropsType = {
   label: string
   important: boolean
   deleteTask: (id: number) => void
-  onDoneTask:(id: number) => void
+  onDoneTask:(id: number,isDone:boolean) => void
 }
 
 const TodoListItem: FunctionComponent<TodoListItemPropsType> = ({id, label, deleteTask,onDoneTask, isDone,important = false}) => {
@@ -18,7 +18,7 @@ const TodoListItem: FunctionComponent<TodoListItemPropsType> = ({id, label, dele
 
 
   const onLabelClick=(id:number)=>{
-    onDoneTask(id)
+    onDoneTask(id,isDone)
   }
   const onDeleteTask = (id: number) => {
     deleteTask(id)
